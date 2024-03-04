@@ -46,7 +46,7 @@ for w = 25  %: d : an
             plot3(X3, Y3, Z3, 'o', 'markersize', 4, 'markerfacecolor', 'k', 'markeredgecolor', 'k'); hold on
             plot3(X0, Y0, Z0, 'o', 'markersize', 4, 'markerfacecolor', 'k', 'markeredgecolor', 'k'); hold on
             xlabel('x'); ylabel('y'); zlabel('z');
-            %拟合曲面求系数
+            %拟合曲面求系数 (xx, yy, zz)代表的是拟合出来的平面
             xx1 = reshape(x1, [7701, 1]); yy1 = reshape(y1, [7701, 1]); zz1 = reshape(z1, [7701, 1]);
             xx2 = reshape(x2, [7701, 1]); yy2 = reshape(y2, [7701, 1]); zz2 = reshape(z2, [7701, 1]);
             f_SM = fit([xx1, yy1], zz1, 'poly55'); % plot(f_SM, [xx1, yy1], zz1);
@@ -55,20 +55,20 @@ for w = 25  %: d : an
             q = coeffvalues(f_FM);
             warning('off', 'all')
 
-            %带入拟合面 查看拟合结果
+            %带入拟合面 查看拟合结果 (xxx, yyy, zzz)代表的是带入拟合面后的平面
             N = 512;
-            [xx1, yy1] = meshgrid(linspace(min(min(x1)), max(max(x1)), N), linspace(min(min(y1)), max(max(y1)), N));
-            zz1 = p(1) + p(2) .* xx1 + p(3) .* yy1 + p(4) .* xx1 .^ 2 + p(5) .* xx1 .* yy1 + p(6) .* yy1 .^ 2 + p(7) .* xx1 .^ 3 + p(8) .* xx1 .^ 2 .* yy1 + ...
-                p(9) .* xx1 .* yy1 .^ 2 + p(10) .* yy1 .^ 3 + p(11) .* xx1 .^ 4 + p(12) .* xx1 .^ 3 .* yy1 + p(13) .* xx1 .^ 2 .* yy1 .^ 2 + ...
-                p(14) .* xx1 .* yy1 .^ 3 + p(15) .* yy1 .^ 4 + p(16) .* xx1 .^ 5 + p(17) .* xx1 .^ 4 .* yy1 + p(18) .* xx1 .^ 3 .* yy1 .^ 2 + ...
-                p(19) .* xx1 .^ 2 .* yy1 .^ 3 + p(20) .* xx1 .* yy1 .^ 4 + p(21) .* yy1 .^ 5;
-            [xx2, yy2] = meshgrid(linspace(min(min(x2)), max(max(x2)), N), linspace(min(min(y2)), max(max(y2)), N));
-            zz2 = q(1) + q(2) .* xx2 + q(3) .* yy2 + q(4) .* xx2 .^ 2 + q(5) .* xx2 .* yy2 + q(6) .* yy2 .^ 2 + q(7) .* xx2 .^ 3 + q(8) .* xx2 .^ 2 .* yy2 + ...
-                q(9) .* xx2 .* yy2 .^ 2 + q(10) .* yy2 .^ 3 + q(11) .* xx2 .^ 4 + q(12) .* xx2 .^ 3 .* yy2 + q(13) .* xx2 .^ 2 .* yy2 .^ 2 + ...
-                q(14) .* xx2 .* yy2 .^ 3 + q(15) .* yy2 .^ 4 + q(16) .* xx2 .^ 5 + q(17) .* xx2 .^ 4 .* yy2 + q(18) .* xx2 .^ 3 .* yy2 .^ 2 + ...
-                q(19) .* xx2 .^ 2 .* yy2 .^ 3 + q(20) .* xx2 .* yy2 .^ 4 + q(21) .* yy2 .^ 5;
-            surf(xx1, yy1, zz1); hold on
-            surf(xx2, yy2, zz2);
+            [xxx1, yyy1] = meshgrid(linspace(min(min(xx1)), max(max(xx1)), N), linspace(min(min(yy1)), max(max(yy1)), N));
+            zzz1 = p(1) + p(2) .* xxx1 + p(3) .* yyy1 + p(4) .* xxx1 .^ 2 + p(5) .* xxx1 .* yyy1 + p(6) .* yyy1 .^ 2 + p(7) .* xxx1 .^ 3 + p(8) .* xxx1 .^ 2 .* yyy1 + ...
+                p(9) .* xxx1 .* yyy1 .^ 2 + p(10) .* yyy1 .^ 3 + p(11) .* xxx1 .^ 4 + p(12) .* xxx1 .^ 3 .* yyy1 + p(13) .* xxx1 .^ 2 .* yyy1 .^ 2 + ...
+                p(14) .* xxx1 .* yyy1 .^ 3 + p(15) .* yyy1 .^ 4 + p(16) .* xxx1 .^ 5 + p(17) .* xxx1 .^ 4 .* yyy1 + p(18) .* xxx1 .^ 3 .* yyy1 .^ 2 + ...
+                p(19) .* xxx1 .^ 2 .* yyy1 .^ 3 + p(20) .* xxx1 .* yyy1 .^ 4 + p(21) .* yyy1 .^ 5;
+            [xxx2, yyy2] = meshgrid(linspace(min(min(xx2)), max(max(xx2)), N), linspace(min(min(yy2)), max(max(yy2)), N));
+            zzz2 = q(1) + q(2) .* xxx2 + q(3) .* yyy2 + q(4) .* xxx2 .^ 2 + q(5) .* xxx2 .* yyy2 + q(6) .* yyy2 .^ 2 + q(7) .* xxx2 .^ 3 + q(8) .* xxx2 .^ 2 .* yyy2 + ...
+                q(9) .* xxx2 .* yyy2 .^ 2 + q(10) .* yyy2 .^ 3 + q(11) .* xxx2 .^ 4 + q(12) .* xxx2 .^ 3 .* yyy2 + q(13) .* xxx2 .^ 2 .* yyy2 .^ 2 + ...
+                q(14) .* xxx2 .* yyy2 .^ 3 + q(15) .* yyy2 .^ 4 + q(16) .* xxx2 .^ 5 + q(17) .* xxx2 .^ 4 .* yyy2 + q(18) .* xxx2 .^ 3 .* yyy2 .^ 2 + ...
+                q(19) .* xxx2 .^ 2 .* yyy2 .^ 3 + q(20) .* xxx2 .* yyy2 .^ 4 + q(21) .* yyy2 .^ 5;
+            surf(xxx1, yyy1, zzz1); hold on
+            surf(xxx2, yyy2, zzz2);
             colormap('copper'); shading interp; %view(0,0)
         end
     end
