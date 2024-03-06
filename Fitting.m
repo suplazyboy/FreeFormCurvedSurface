@@ -181,8 +181,8 @@ for w = 25  %: d : an
             xlswrite(filename_Y0, Y0, sheet, xlRange);
             xlswrite(filename_Z0, Z0, sheet, xlRange);
             xlswrite(filename_x3, x3, sheet, xlRange);
-            xlswrite(filename_y0, y0, sheet, xlRange);
-            xlswrite(filename_z0, z0, sheet, xlRange);
+            xlswrite(filename_y3, y3, sheet, xlRange);
+            xlswrite(filename_z3, z3, sheet, xlRange);
             xlswrite(filename_X1, X1, sheet, xlRange);
             xlswrite(filename_Y1, Y1, sheet, xlRange);
             xlswrite(filename_Z1, Z1, sheet, xlRange);
