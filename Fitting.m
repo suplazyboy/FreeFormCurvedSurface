@@ -163,7 +163,33 @@ for w = 25  %: d : an
                     line([X2(j, i), x3(j, i)], [Y2(j, i), y3(j, i)], [Z2(j, i), z3(j, i)], 'linewidth', 1, 'color', 'b'); hold on
                 end
             end
-
+            dictionaryname = ['w=', num2str(w), ' L1=', num2str(L1), ' L2=', num2str(L2)];
+            filename_X0 = ['F:\FreeFormAssets\RealPoint\', dictionaryname, 'real_X0.xlsx'];
+            filename_Y0 = ['F:\FreeFormAssets\RealPoint\', dictionaryname, 'real_Y0.xlsx'];
+            filename_Z0 = ['F:\FreeFormAssets\RealPoint\', dictionaryname, 'real_Z0.xlsx'];
+            filename_x3 = ['F:\FreeFormAssets\RealPoint\', dictionaryname, 'real_x3.xlsx'];
+            filename_y3 = ['F:\FreeFormAssets\RealPoint\', dictionaryname, 'real_y3.xlsx'];
+            filename_z3 = ['F:\FreeFormAssets\RealPoint\', dictionaryname, 'real_z3.xlsx'];
+            filename_X1 = ['F:\FreeFormAssets\RealPoint\', dictionaryname, 'real_X1.xlsx'];
+            filename_Y1 = ['F:\FreeFormAssets\RealPoint\', dictionaryname, 'real_Y1.xlsx'];
+            filename_Z1 = ['F:\FreeFormAssets\RealPoint\', dictionaryname, 'real_Z1.xlsx'];
+            filename_X2 = ['F:\FreeFormAssets\RealPoint\', dictionaryname, 'real_X1.xlsx'];
+            filename_Y2 = ['F:\FreeFormAssets\RealPoint\', dictionaryname, 'real_Y2.xlsx'];
+            filename_Z2 = ['F:\FreeFormAssets\RealPoint\', dictionaryname, 'real_Z2.xlsx'];
+            filename_alpha = ['F:\FreeFormAssets\RealPoint\', dictionaryname, 'alpha.xlsx']
+            xlswrite(filename_X0, X0, sheet, xlRange);
+            xlswrite(filename_Y0, Y0, sheet, xlRange);
+            xlswrite(filename_Z0, Z0, sheet, xlRange);
+            xlswrite(filename_x3, x3, sheet, xlRange);
+            xlswrite(filename_y0, y0, sheet, xlRange);
+            xlswrite(filename_z0, z0, sheet, xlRange);
+            xlswrite(filename_X1, X1, sheet, xlRange);
+            xlswrite(filename_Y1, Y1, sheet, xlRange);
+            xlswrite(filename_Z1, Z1, sheet, xlRange);
+            xlswrite(filename_X2, X2, sheet, xlRange);
+            xlswrite(filename_Y2, Y2, sheet, xlRange);
+            xlswrite(filename_Z2, Z2, sheet, xlRange);
+            xlswrite(filename_alpha, alpha_mrad, sheet, xlRange);
         end
     end
 end
