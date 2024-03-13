@@ -1,5 +1,5 @@
 clear all; close all; clc;
-M = 150; N = 50;
+M = 20; N = 20;
 n1 = 1; n2 = 1.51; n3 = 1;
 L0 = 1; dz = 0.3; L3 = 10;
 x0 = 0; y0 = 0; z0 = 0; %¹âÔ´µÄÎ»ÖÃ
@@ -43,10 +43,15 @@ for w = 25  %: d : an
             A3 = [0 1 0];
             for i = 1 : M - 1
                 for j = 1 : N
-                    
+                    if (X0(i, j) == 0)
+                        y0 = 0;
+                    else
+                        y0 = dz * abs(sin(atan(Z0(i, j) / X0(i, j))));
+                    end
                     x1(1, j) = 0; y1(1, j) = L1; z1(1, j) = 0;
                     x2(1, j) = 0; y2(1, j) = L2; z2(1, j) = 0;
-                    A1(1) = X0(i, j) - x0; A1(2) = Y0(i, j) - (y0 + dz * abs(sin(atan(Z0(i, j) / X0(i, j)))));A1(3) = Z0(i, j) - z0; A1 = normr(A1);
+                    A1(1) = X0(i, j) - x0; A1(2) = Y0(i, j) - (y0);
+                    A1(3) = Z0(i, j) - z0; A1 = normr(A1);
                     A2(1) = x2(i, j) - x1(i, j); A2(2) = y2(i, j) - y1(i, j); A2(3) = z2(i, j) - z1(i, j); A2 = normr(A2);
                     
                     syms N2x N2y N2z
@@ -66,23 +71,23 @@ for w = 25  %: d : an
                     syms N1x N1y N1z
                     N1 = [N1x, N1y, N1z]; [N1x, N1y, N1z] = vpasolve(n2 * A2 - n1 * A1 - (n2 * dot(N1, A2) - n1 * dot(N1, A1)) .* N1);
                     N1 = [N1x, N1y, N1z];
-                    A12(1) = X0(i + 1, j) - x0; A12(2) = Y0(i + 1, j) - (y0 + dz * abs(sin(atan(Z0(i + 1, j) / X0(i + 1, j))))); A12(3) = Z0(i + 1, j) - z0; A12 = normr(A12);
+                    A12(1) = X0(i + 1, j) - x0; A12(2) = Y0(i + 1, j) - (y0); A12(3) = Z0(i + 1, j) - z0; A12 = normr(A12);
                     syms k1 dx1 dy1 dz1
                     k1 = (dx1 - x0) / A12(1);
-                    dy1 = k1 * A12(2) + y0 + dz * abs(sin(atan(Z0(i + 1, j) / X0(i + 1, j))));
+                    dy1 = k1 * A12(2) + y0;
                     dz1 = k1 * A12(3) + z0;
                     
                     [dx1] = solve(N1x * (dx1 - x1(i, j)) + N1y * (dy1 - y1(i, j)) + N1z * (dz1 - z1(i, j)));
                     x1(i + 1, j) = double(dx1);
                     k1 = (x1(i + 1, j) - x0) / A12(1);
-                    y1(i + 1, j) = k1 * A12(2) + y0 + dz * abs(sin(atan(Z0(i + 1, j) / X0(i + 1, j))));
+                    y1(i + 1, j) = k1 * A12(2) + y0;
                     z1(i + 1, j) = k1 * A12(3) + z0;
                 end
             end
             
             for i = 1 : M
                 for j = 1 : N
-                    line([x0, x1(i, j)], [y0 + dz * abs(sin(atan(Z0(i, j) / X0(i, j)))), y1(i, j)], [z0, z1(i, j)], 'color', 'r'); hold on
+                    line([x0, x1(i, j)], [y0, y1(i, j)], [z0, z1(i, j)], 'color', 'r'); hold on
                     line([x1(i, j), x2(i, j)], [y1(i, j), y2(i, j)], [z1(i, j), z2(i, j)], 'color', 'r'); hold on
                     line([x2(i, j), X3(i, j)], [y2(i, j), Y3(i, j)], [z2(i, j), Z3(i, j)], 'color', 'r'); hold on
                 end
@@ -92,21 +97,26 @@ for w = 25  %: d : an
             surf(x2, y2, z2); hold on;
             axis equal;
             set(gcf, 'numbertitle', 'off', 'Name', ['ÀíÏëÇé¿öÏÂw=' num2str(w), 'L1=' num2str(L1), 'L2=' num2str(L2), 'L3=' num2str(L3)])
-            saveas(gcf, ['F:\FreeFormAssets\CurvedSurface\ÀíÏëÇé¿öÏÂw=' num2str(w), 'L1=' num2str(L1), 'L2=' num2str(L2), 'L3=' num2str(L3) '.png'])
+            dictionaryname = ['w=', num2str(w), ' L1=', num2str(L1), ' L2=', num2str(L2)];
+            pathToFolder = fullfile('F:\FreeFormAssets\CurvedSurface\', dictionaryname); % ï¿½ï¿½È¡ï¿½ï¿½Ç°ï¿½ï¿½ï¿½ï¿½Ä¿Â¼ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï³ï¿½ï¿½ï¿½ï¿½ï¿½Â·ï¿½ï¿?
+            if ~exist(pathToFolder, 'dir') % ï¿½Ð¶Ï¸ï¿½Â·ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ï¿½Ñ´ï¿½ï¿½ï¿½Í¬ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½
+                mkdir(pathToFolder); % ï¿½ï¿½ï¿½ï¿½mkdir()ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½
+            end
+            saveas(gcf, ['F:\FreeFormAssets\CurvedSurface\', dictionaryname, '\ÀíÏëÇé¿öÏÂ.png'])
             sheet = round((L1 - L1_start) / L1_interval) + 1; %Íâ²¿Ñ­»·????£¬´æÈëÒ»¸ösheet
             pdx = round((L2 - L2_start) / L2_interval) + 1; %¼ÇÂ¼ÄÚ²¿Ñ­»·´ÎÊý
-            filename_X0 = ['F:\FreeFormAssets\CurvedSurface\X0_', num2str(w), '.xlsx'];
-            filename_Y0 = ['F:\FreeFormAssets\CurvedSurface\Y0_', num2str(w), '.xlsx'];
-            filename_Z0 = ['F:\FreeFormAssets\CurvedSurface\Z0_', num2str(w), '.xlsx'];
-            filename_X3 = ['F:\FreeFormAssets\CurvedSurface\X3_', num2str(w), '.xlsx'];
-            filename_Y3 = ['F:\FreeFormAssets\CurvedSurface\Y3_', num2str(w), '.xlsx'];
-            filename_Z3 = ['F:\FreeFormAssets\CurvedSurface\Z3_', num2str(w), '.xlsx'];
-            filename_xx1 = ['F:\FreeFormAssets\CurvedSurface\xx1_', num2str(w), '.xlsx'];
-            filename_yy1 = ['F:\FreeFormAssets\CurvedSurface\yy1_', num2str(w), '.xlsx'];
-            filename_zz1 = ['F:\FreeFormAssets\CurvedSurface\zz1_', num2str(w), '.xlsx'];
-            filename_xx2 = ['F:\FreeFormAssets\CurvedSurface\xx2_', num2str(w), '.xlsx'];
-            filename_yy2 = ['F:\FreeFormAssets\CurvedSurface\yy2_', num2str(w), '.xlsx'];
-            filename_zz2 = ['F:\FreeFormAssets\CurvedSurface\zz2_', num2str(w), '.xlsx'];
+            filename_X0 = ['F:\FreeFormAssets\CurvedSurface\',dictionaryname '\X0.xlsx'];
+            filename_Y0 = ['F:\FreeFormAssets\CurvedSurface\',dictionaryname '\Y0.xlsx'];
+            filename_Z0 = ['F:\FreeFormAssets\CurvedSurface\',dictionaryname  '\Z0.xlsx'];
+            filename_X3 = ['F:\FreeFormAssets\CurvedSurface\',dictionaryname '\X3.xlsx'];
+            filename_Y3 = ['F:\FreeFormAssets\CurvedSurface\',dictionaryname '\Y3.xlsx'];
+            filename_Z3 = ['F:\FreeFormAssets\CurvedSurface\',dictionaryname '\Z3.xlsx'];
+            filename_xx1 = ['F:\FreeFormAssets\CurvedSurface\',dictionaryname '\xx1.xlsx'];
+            filename_yy1 = ['F:\FreeFormAssets\CurvedSurface\',dictionaryname '\yy1.xlsx'];
+            filename_zz1 = ['F:\FreeFormAssets\CurvedSurface\',dictionaryname '\zz1.xlsx'];
+            filename_xx2 = ['F:\FreeFormAssets\CurvedSurface\',dictionaryname '\xx2.xlsx'];
+            filename_yy2 = ['F:\FreeFormAssets\CurvedSurface\',dictionaryname '\yy2.xlsx'];
+            filename_zz2 = ['F:\FreeFormAssets\CurvedSurface\',dictionaryname '\zz2.xlsx'];
             xlRange = ['A' num2str(1 + (pdx - 1) * (M + 1)) ':EU' num2str(1 + (pdx - 1) * (M + 1) + (M - 1))];
             xlswrite(filename_X0, X0, sheet, xlRange); %±£´æÎÄ¼þ
             xlswrite(filename_Y0, Y0, sheet, xlRange); %±£´æÎÄ¼þ

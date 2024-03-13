@@ -1,22 +1,22 @@
 clear all; close all; clc;
-%Íø¸ñ»®·Ö
+%ï¿½ï¿½ï¿½ñ»®·ï¿½
 L0 = 1; dz = 0.3; L = 10;
 faix = pi / 6; faiy = pi / 18;
-N = 50; %ºáÏòÍø¸ñ¸öÊý ¶Ô½Ç¶Èt0½øÐÐ·Ö¸î
-M = 150; %×ÝÏòÍø¸ñ¸öÊý ¶Ô³¤¶Èr0½øÐÐ·Ö¸î
+N = 150; %ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿?ï¿½Ô½Ç¶ï¿½t0ï¿½ï¿½ï¿½Ð·Ö¸ï¿½
+M = 50; %ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿?ï¿½Ô³ï¿½ï¿½ï¿½r0ï¿½ï¿½ï¿½Ð·Ö¸ï¿½
 lambda = 1.55 * 10 ^ (-3);
 zy0 = 0; zx0 = 0; z1 = L0; R0 = 0.5;
 wx0 = lambda * 2 / pi ./ faix; wy0 = lambda * 2 / pi ./ faiy;
 ZRx = pi .* wx0 .^ 2 ./ lambda; wx = wx0 .* sqrt(1 + ((z1 - zx0) / ZRx) .^ 2);
 ZRy = pi .* wy0 .^ 2 ./ lambda; wy = wy0 .* sqrt(1 + ((z1 - zy0) / ZRy) .^ 2);
-%% ¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª»®·ÖÈëÉäÃæÍø¸ñ¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª
+%% ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ñ¡ª¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 syms r0 t0
 a = wx; b = wy;
 x = r0 * a * cos(t0); y = r0 * b * sin(t0);
 f1 = 2 / (wx * wy * pi) * exp(-2 * x ^ 2 / wx ^ 2 - 2 * y ^ 2 / wy ^ 2);
 sum_in = int(int(a * b * f1 * r0, r0, 0, 1), t0, 0, 2 * pi); sum_in = double(sum_in);
-I0 = sum_in / ((N - 1) * (M - 1)); %ÈëÉäÃæÃ¿Ò»Ð¡¸ñµÄÄÜÁ¿
-R0(1) = 0; T0(1) = 0;%ÈëÉäÃæ×ÝÏòÍø¸ñ 
+I0 = sum_in / ((N - 1) * (M - 1)); %ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã¿Ò»Ð¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿?
+R0(1) = 0; T0(1) = 0;%ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 
 for i = 1 : M - 1
     syms r0 t0 R00
     x = r0 * a * cos(t0); y = r0 * b * sin(t0);
@@ -37,15 +37,15 @@ for i = 1 : M
     end
 end
 Y0 = L0 * ones(size(X0));
-cdata = cat(3, zeros(size(X0)), zeros(size(X0)), zeros(size(X0))); %ºÚÉ«
-filename_X0 = ['D:\Matlab\project\hzlnb\M' num2str(M) 'N' num2str(N) 'X0_L0=' num2str(L0) '.xlsx'];
-filename_Y0 = ['D:\Matlab\project\hzlnb\M' num2str(M) 'N' num2str(N) 'Y0_L0=' num2str(L0) '.xlsx'];
-filename_Z0 = ['D:\Matlab\project\hzlnb\M' num2str(M) 'N' num2str(N) 'Z0_L0=' num2str(L0) '.xlsx'];
-xlswrite(filename_X0, X0); %±£´æÎÄ¼þ
-xlswrite(filename_Y0, Y0); %±£´æÎÄ¼þ
-xlswrite(filename_Z0, Z0); %±£´æÎÄ¼þ
+cdata = cat(3, zeros(size(X0)), zeros(size(X0)), zeros(size(X0))); %ï¿½ï¿½É«
+filename_X0 = ['F:\FreeFormAssets\EnergyGrid\M' num2str(M) 'N' num2str(N) 'X0_L0=' num2str(L0) '.xlsx'];
+filename_Y0 = ['F:\FreeFormAssets\EnergyGrid\M' num2str(M) 'N' num2str(N) 'Y0_L0=' num2str(L0) '.xlsx'];
+filename_Z0 = ['F:\FreeFormAssets\EnergyGrid\M' num2str(M) 'N' num2str(N) 'Z0_L0=' num2str(L0) '.xlsx'];
+xlswrite(filename_X0, X0); %ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½
+xlswrite(filename_Y0, Y0); %ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½
+xlswrite(filename_Z0, Z0); %ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½
 
-%% ¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª»®·Ö³öÉäÃæÍø¸ñ¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª
+%% ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ñ¡ª¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 a1 = 20; d = 1; an = 25;
 for w = 25 %a1 : d : an
     syms r0 t0
@@ -53,7 +53,7 @@ for w = 25 %a1 : d : an
     f2 = 2 / (w ^ 2 * pi) * exp(-2 * (x ^ 2 + y ^ 2) / w ^ 2);
     R3(1) = 0; T3(1) = 0;
     sum_out = double(int(int(f2 * r0, r0, 0, w), t0, 0, 2 * pi));
-    I3 = sum_out / ((N - 1) * (M - 1)); %³öÉäÃæÃ¿Ò»Ð¡¸ñµÄÄÜÁ¿
+    I3 = sum_out / ((N - 1) * (M - 1)); %ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã¿Ò»Ð¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿?
     for i = 1 : M - 1
         syms r0 t0 R3_temp
         x = r0 * cos(t0); y = r0 * sin(t0);
@@ -74,10 +74,10 @@ for w = 25 %a1 : d : an
     end
     Y3 = L * ones(size(X3));
     sheet = (w - a1) / d + 1;
-    filename_X3 = ['D:\Matlab\project\hzlnb\M' num2str(M) 'N' num2str(N) 'X3_L3=' num2str(L) 'w=' num2str(a1) '-' num2str(d) '-' num2str(an) '.xlsx'];
-    filename_Y3 = ['D:\Matlab\project\hzlnb\M' num2str(M) 'N' num2str(N) 'Y3_L3=' num2str(L) 'w=' num2str(a1) '-' num2str(d) '-' num2str(an) '.xlsx'];
-    filename_Z3 = ['D:\Matlab\project\hzlnb\M' num2str(M) 'N' num2str(N) 'Z3_L3=' num2str(L) 'w=' num2str(a1) '-' num2str(d) '-' num2str(an) '.xlsx'];
-    xlswrite(filename_X3, X3, sheet); %±£´æÎÄ¼þ
-    xlswrite(filename_Y3, Y3, sheet); %±£´æÎÄ¼þ
-    xlswrite(filename_Z3, Z3, sheet); %±£´æÎÄ¼þ
+    filename_X3 = ['F:\FreeFormAssets\EnergyGrid\M' num2str(M) 'N' num2str(N) 'X3_L3=' num2str(L) 'w=' num2str(a1) '-' num2str(d) '-' num2str(an) '.xlsx'];
+    filename_Y3 = ['F:\FreeFormAssets\EnergyGrid\M' num2str(M) 'N' num2str(N) 'Y3_L3=' num2str(L) 'w=' num2str(a1) '-' num2str(d) '-' num2str(an) '.xlsx'];
+    filename_Z3 = ['F:\FreeFormAssets\EnergyGrid\M' num2str(M) 'N' num2str(N) 'Z3_L3=' num2str(L) 'w=' num2str(a1) '-' num2str(d) '-' num2str(an) '.xlsx'];
+    xlswrite(filename_X3, X3, sheet); %ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½
+    xlswrite(filename_Y3, Y3, sheet); %ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½
+    xlswrite(filename_Z3, Z3, sheet); %ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½
 end
